@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+
+	<p:panelGrid columns="2" styleClass="ui-noborder">
+		<f:facet name="header">Usuario</f:facet>
+
+		<p:outputLabel value="Id:" rendered="#{usuarioEdit.edicaoDeUsuario}" />
+		<p:outputLabel value="#{usuarioEdit.usuario.id}"
+			rendered="#{usuarioEdit.edicaoDeUsuario}" />
+
+		<p:outputLabel for="nome" value="Nome:" />
+		<p:inputText id="nome" value="#{usuarioEdit.usuario.nome}"
+			label="Nome" />
+
+		<p:outputLabel for="sobreNome" value="SobreNome:" />
+		<p:inputText id="sobreNome" value="#{usuarioEdit.usuario.sobreNome}"
+			label="SobreNome" />
+
+		<p:outputLabel for="dataDeAniversario" value="DataDeAniversario:" />
+		<ui:include src="/WEB-INF/templates/_date.xhtml">
+			<ui:param name="id" value="dataDeAniversario" />
+			<ui:param name="value"
+				value="#{usuarioEdit.usuario.dataDeAniversario}" />
+			<ui:param name="label" value="DataDeAniversario" />
+			<ui:param name="required" value="#{true}" />
+		</ui:include>
+
+		<p:outputLabel for="group" value="Group:" />
+		<p:selectOneMenu id="group" value="#{usuarioEdit.usuario.group}" label="Group" required="true">
+			<f:selectItem itemLabel="Selecione" itemValue="#{null}"	itemDisabled="true" />
+			<f:selectItems value="#{usuarioEdit.getGroups()}" var="g" itemLabel="#{g.nome}" itemValue="#{g}" />
+		</p:selectOneMenu>
+
+		<p:outputLabel for="login" value="Login:" />
+		<p:outputPanel>
+			<p:inputText id="login" value="#{usuarioEdit.usuario.login}"
+				label="Login" required="true" />
+			<p:commandButton id="checarDisponibilidadeLogin"
+				icon="fa fa-question" process="@this formEdit:login"
+				action="#{usuarioEdit.checarDisponibilidadeLogin()}" />
+			<p:tooltip id="checarDisponibilidadeLoginTooltip"
+				value="Is login available?" for="checarDisponibilidadeLogin" />
+		</p:outputPanel>
+
+		<p:outputLabel for="password" value="Password:"
+			rendered="#{!usuarioEdit.edicaoDeUsuario}" />
+		<p:password id="password" value="#{usuarioEdit.usuario.password}"
+			label="Password" required="true"
+			rendered="#{!usuarioEdit.edicaoDeUsuario}"
+			match="confirmacaoPassword" feedback="true" />
+
+		<p:outputLabel for="confirmacaoPassword" value="Confirm Password:"
+			rendered="#{!usuarioEdit.edicaoDeUsuario}" />
+		<p:password id="confirmacaoPassword"
+			value="#{usuarioEdit.usuario.password}" label="Confirm Password"
+			required="true" rendered="#{!usuarioEdit.edicaoDeUsuario}"
+			feedback="true" />
+	</p:panelGrid>
+
+
+
+
+
+</ui:composition>
+</html>
