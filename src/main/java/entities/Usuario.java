@@ -3,6 +3,7 @@ package entities;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -10,6 +11,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -39,8 +42,19 @@ public class Usuario implements Identificavel {
 	private String login;
 
 	private String password;
+	
+	@OneToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="Codigo_Endereco")
+	private Endereco endereco;
+	
+	@OneToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="Codigo_Contato")
+	private Contato contato;
 
 	public Usuario() {
+		
+		endereco = new Endereco();
+		contato = new Contato();
 
 	}
 
@@ -100,16 +114,27 @@ public class Usuario implements Identificavel {
 		this.password = password;
 	}
 
+	public Contato getContato() {
+		return contato;
+	}
+
+	public void setContato(Contato contato) {
+		this.contato = contato;
+	}
+
+	public Endereco getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((dataDeAniversario == null) ? 0 : removeTime(dataDeAniversario).hashCode());
-		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
-		result = prime * result + ((group == null) ? 0 : group.hashCode());
-		result = prime * result + ((sobreNome == null) ? 0 : sobreNome.hashCode());
-		result = prime * result + ((login == null) ? 0 : login.hashCode());
-		result = prime * result + ((password == null) ? 0 : password.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 
@@ -122,34 +147,19 @@ public class Usuario implements Identificavel {
 		if (getClass() != obj.getClass())
 			return false;
 		Usuario other = (Usuario) obj;
-		if (dataDeAniversario == null) {
-			if (other.dataDeAniversario != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!removeTime(dataDeAniversario).equals(removeTime(other.dataDeAniversario)))
-			return false;
-		if (nome == null) {
-			if (other.nome != null)
-				return false;
-		} else if (!nome.equals(other.nome))
-			return false;
-		if (group != other.group)
-			return false;
-		if (sobreNome == null) {
-			if (other.sobreNome != null)
-				return false;
-		} else if (!sobreNome.equals(other.sobreNome))
-			return false;
-		if (login == null) {
-			if (other.login != null)
-				return false;
-		} else if (!login.equals(other.login))
-			return false;
-		if (password == null) {
-			if (other.password != null)
-				return false;
-		} else if (!password.equals(other.password))
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Usuario [id=" + id + ", nome=" + nome + ", sobreNome=" + sobreNome + ", dataDeAniversario="
+				+ dataDeAniversario + ", group=" + group + ", login=" + login + ", password=" + password + ", endereco="
+				+ endereco + ", contato=" + contato + "]";
 	}
 
 	private Date removeTime(Date date) {
@@ -162,12 +172,7 @@ public class Usuario implements Identificavel {
 		return cal.getTime();
 	}
 
-	@Override
-	public String toString() {
-		return "Usuario [id=" + id + ", nome=" + nome + ", sobreNome=" + sobreNome + ", dataDeAniversario="
-				+ dataDeAniversario + ", group=" + group + ", login=" + login + ", password=" + password + "]";
-	}
-
+	
 	@Override
 	public Usuario clone() {
 		Usuario clone = new Usuario();
@@ -178,6 +183,9 @@ public class Usuario implements Identificavel {
 		clone.setGroup(group);
 		clone.setLogin(login);
 		clone.setPassword(password);
+		clone.setContato(contato);
+		clone.setEndereco(endereco);
 		return clone;
 	}
+
 }

@@ -9,6 +9,8 @@
 
 		<class>entities.Usuario</class>
 		<class>entities.Produto</class>
+		<class>entities.Endereco</class>
+		<class>entities.Contato</class>
 
 		<properties>
 		
@@ -18,7 +20,7 @@
 			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
 			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/lanchonete" />
 			<property name="javax.persistence.jdbc.user" value="postgres" />
-			<property name="javax.persistence.jdbc.password" value="kelly123" />
+			<property name="javax.persistence.jdbc.password" value="postgres" />
 			<!-- /Database PostgreSQL-->
 
 			
