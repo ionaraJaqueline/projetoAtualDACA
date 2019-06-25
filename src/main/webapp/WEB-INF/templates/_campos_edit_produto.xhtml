@@ -9,6 +9,7 @@
 
 <ui:composition>
 
+
 	<p:panelGrid columns="2" styleClass="ui-noborder">
 		<f:facet name="header">Produto</f:facet>
 
@@ -23,40 +24,36 @@
 		<p:outputLabel for="descricao" value="Descricao:" />
 		<p:inputText id="descricao" value="#{produtoEdit.produto.descricao}"
 			label="Descricao" />
+			
+			<p:outputLabel for="tipoDeProduto" value="TipoDeProduto:" />
+		<p:selectOneMenu id="tipoDeProduto"	value="#{produtoEdit.produto.tipoDeProduto}" label="TipoDeProduto"	required="true">
+			<f:selectItem itemLabel="Selecione" itemValue="#{null}"	itemDisabled="true" />
+			<f:selectItems value="#{produtoEdit.getTiposDeProdutos()}" var="g"	itemLabel="#{g.nome}" itemValue="#{g}" />
+		</p:selectOneMenu>
 
 		<p:outputLabel for="dataDeValidade" value="DataDeValidade:" />
 		<ui:include src="/WEB-INF/templates/_date.xhtml">
 			<ui:param name="id" value="dataDeValidade" />
-			<ui:param name="value"
-				value="#{produtoEdit.produto.dataDeValidade}" />
+			<ui:param name="value" value="#{produtoEdit.produto.dataDeValidade}" />
 			<ui:param name="label" value="DataDeValidade" />
 			<ui:param name="required" value="#{true}" />
 		</ui:include>
-		
+
 		<p:outputLabel for="dataEntrada" value="DataEntrada:" />
 		<ui:include src="/WEB-INF/templates/_date.xhtml">
 			<ui:param name="id" value="dataEntrada" />
-			<ui:param name="value"
-				value="#{produtoEdit.produto.dataEntrada}" />
+			<ui:param name="value" value="#{produtoEdit.produto.dataEntrada}" />
 			<ui:param name="label" value="DataEntrada" />
 			<ui:param name="required" value="#{true}" />
 		</ui:include>
-		
+
 		<p:outputLabel for="dataSaida" value="DataSaida:" />
 		<ui:include src="/WEB-INF/templates/_date.xhtml">
 			<ui:param name="id" value="dataSaida" />
-			<ui:param name="value"
-				value="#{produtoEdit.produto.dataSaida}" />
+			<ui:param name="value" value="#{produtoEdit.produto.dataSaida}" />
 			<ui:param name="label" value="DataSaida" />
 			<ui:param name="required" value="#{true}" />
 		</ui:include>
-
-		<p:outputLabel for="tipoDeProduto" value="TipoDeProduto:" />
-		<p:selectOneMenu id="tipoDeProduto" value="#{produtoEdit.produto.tipoDeProduto}" label="TipoDeProduto" required="true">
-			<f:selectItem itemLabel="Selecione" itemValue="#{null}"	itemDisabled="true" />
-			<f:selectItems value="#{produtoEdit.getTiposDeProdutos()}" var="g" itemLabel="#{g.nome}" itemValue="#{g}" />
-		</p:selectOneMenu>
-
 
 	</p:panelGrid>
 

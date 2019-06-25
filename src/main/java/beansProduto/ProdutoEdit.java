@@ -5,10 +5,8 @@ import javax.faces.bean.ViewScoped;
 
 import beans.AbstractBean;
 import beans.EnderecoPaginas;
-
 import entities.Produto;
 import entities.TipoDeProduto;
-
 import impl.ProdutoServiceImpl;
 import service.ProdutoService;
 import service.ServiceDacException;
