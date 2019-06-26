@@ -30,6 +30,11 @@ public class Usuario implements Identificavel {
 
 	private String sobreNome;
 
+	private String cpf;
+	
+	// atributo apenas do funcionário
+	private Float salario;
+
 	@Temporal(TemporalType.DATE)
 	private Date dataDeAniversario;
 
@@ -42,17 +47,17 @@ public class Usuario implements Identificavel {
 	private String login;
 
 	private String password;
-	
-	@OneToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="Codigo_Endereco")
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "Codigo_Endereco")
 	private Endereco endereco;
-	
-	@OneToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="Codigo_Contato")
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "Codigo_Contato")
 	private Contato contato;
 
 	public Usuario() {
-		
+
 		endereco = new Endereco();
 		contato = new Contato();
 
@@ -129,15 +134,51 @@ public class Usuario implements Identificavel {
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
 	}
+	
+	public String getCpf() {
+		return cpf;
+	}
 
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
+	public Float getSalario() {
+		return salario;
+	}
+
+	public void setSalario(Float salario) {
+		this.salario = salario;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((contato == null) ? 0 : contato.hashCode());
+		result = prime * result + ((cpf == null) ? 0 : cpf.hashCode());
+		result = prime * result + ((dataDeAniversario == null) ? 0 : dataDeAniversario.hashCode());
+		result = prime * result + ((endereco == null) ? 0 : endereco.hashCode());
+		result = prime * result + ((group == null) ? 0 : group.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((login == null) ? 0 : login.hashCode());
+		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		result = prime * result + ((password == null) ? 0 : password.hashCode());
+		result = prime * result + Float.floatToIntBits(salario);
+		result = prime * result + ((sobreNome == null) ? 0 : sobreNome.hashCode());
 		return result;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -147,19 +188,68 @@ public class Usuario implements Identificavel {
 		if (getClass() != obj.getClass())
 			return false;
 		Usuario other = (Usuario) obj;
+		if (contato == null) {
+			if (other.contato != null)
+				return false;
+		} else if (!contato.equals(other.contato))
+			return false;
+		if (cpf == null) {
+			if (other.cpf != null)
+				return false;
+		} else if (!cpf.equals(other.cpf))
+			return false;
+		if (dataDeAniversario == null) {
+			if (other.dataDeAniversario != null)
+				return false;
+		} else if (!dataDeAniversario.equals(other.dataDeAniversario))
+			return false;
+		if (endereco == null) {
+			if (other.endereco != null)
+				return false;
+		} else if (!endereco.equals(other.endereco))
+			return false;
+		if (group != other.group)
+			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
+		if (login == null) {
+			if (other.login != null)
+				return false;
+		} else if (!login.equals(other.login))
+			return false;
+		if (nome == null) {
+			if (other.nome != null)
+				return false;
+		} else if (!nome.equals(other.nome))
+			return false;
+		if (password == null) {
+			if (other.password != null)
+				return false;
+		} else if (!password.equals(other.password))
+			return false;
+		if (Float.floatToIntBits(salario) != Float.floatToIntBits(other.salario))
+			return false;
+		if (sobreNome == null) {
+			if (other.sobreNome != null)
+				return false;
+		} else if (!sobreNome.equals(other.sobreNome))
+			return false;
 		return true;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
-		return "Usuario [id=" + id + ", nome=" + nome + ", sobreNome=" + sobreNome + ", dataDeAniversario="
-				+ dataDeAniversario + ", group=" + group + ", login=" + login + ", password=" + password + ", endereco="
-				+ endereco + ", contato=" + contato + "]";
+		return "Usuario [id=" + id + ", nome=" + nome + ", sobreNome=" + sobreNome + ", cpf=" + cpf + ", salario="
+				+ salario + ", dataDeAniversario=" + dataDeAniversario + ", group=" + group + ", login=" + login
+				+ ", password=" + password + ", endereco=" + endereco + ", contato=" + contato + "]";
 	}
 
 	private Date removeTime(Date date) {
@@ -172,7 +262,6 @@ public class Usuario implements Identificavel {
 		return cal.getTime();
 	}
 
-	
 	@Override
 	public Usuario clone() {
 		Usuario clone = new Usuario();
@@ -185,7 +274,28 @@ public class Usuario implements Identificavel {
 		clone.setPassword(password);
 		clone.setContato(contato);
 		clone.setEndereco(endereco);
+		clone.setCpf(cpf);
+		clone.setSalario(salario);
 		return clone;
+	}
+
+	/**
+	 * Anula os campos específicos não necessários de acordo com a escolha do grupo.
+	 */
+	public void limparCamposEspecificos() {
+		if (group == null) {
+			return;
+		}
+
+		if (Group.CLIENTE == group) {
+			salario = null;
+		} else if (Group.FUNCIONARIO == group) {
+			dataDeAniversario = null;
+			
+		} else if (Group.ADMIN == group) {
+			dataDeAniversario = null;
+			salario = null;
+		}
 	}
 
 }

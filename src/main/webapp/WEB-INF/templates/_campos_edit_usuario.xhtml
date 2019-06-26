@@ -12,76 +12,7 @@
 	<p:growl id="growl" sticky="true" showDetail="true" />
 
 	<p:wizard>
-		<p:tab id="pessoal" title="Pessoal">
-			<p:panel header="Detalhes pessoais">
-				<p:messages />
-				<f:facet name="header">Usuario</f:facet>
-				<p:panelGrid columns="2" styleClass="ui-noborder">
-
-					<p:outputLabel value="Id:"
-						rendered="#{usuarioEdit.edicaoDeUsuario}" />
-					<p:outputLabel value="#{usuarioEdit.usuario.id}"
-						rendered="#{usuarioEdit.edicaoDeUsuario}" />
-
-					<p:outputLabel for="nome" value="Nome:" />
-					<p:inputText id="nome" value="#{usuarioEdit.usuario.nome}"
-						label="Nome" required="true" />
-
-					<p:outputLabel for="sobreNome" value="SobreNome:" />
-					<p:inputText id="sobreNome"
-						value="#{usuarioEdit.usuario.sobreNome}" label="SobreNome" />
-
-					<p:outputLabel for="dataDeAniversario" value="DataDeAniversario:" />
-					<ui:include src="/WEB-INF/templates/_date.xhtml">
-						<ui:param name="id" value="dataDeAniversario" />
-						<ui:param name="value"
-							value="#{usuarioEdit.usuario.dataDeAniversario}" />
-						<ui:param name="label" value="DataDeAniversario" />
-						<ui:param name="required" value="#{true}" />
-					</ui:include>
-
-				</p:panelGrid>
-			</p:panel>
-		</p:tab>
-
-		<p:tab id="endereco" title="Endereço">
-			<p:panel header="Detalhes de endereço">
-				<p:messages />
-				<p:panelGrid columns="2" styleClass="ui-noborder">
-
-					<p:outputLabel for="rua" value="Rua:" />
-					<p:inputText id="rua" label="Rua"
-						value="#{usuarioEdit.usuario.endereco.rua}" required="true" />
-
-					<p:outputLabel for="numero" value="Número:" />
-					<p:inputText id="numero" label="Numero"
-						value="#{usuarioEdit.usuario.endereco.numero}" required="true"/>
-
-					<p:outputLabel for="bairro" value="Bairro: " />
-					<p:inputText id="bairro" label="Bairro"
-						value="#{usuarioEdit.usuario.endereco.bairro}" required="true"/>
-
-					<p:outputLabel for="cep" value="CEP:" />
-					<p:inputMask id="cep" label="Cep"
-						value="#{usuarioEdit.usuario.endereco.cep}" mask="99999-999" />
-				</p:panelGrid>
-			</p:panel>
-		</p:tab>
-
-		<p:tab id="contato" title="Contato">
-			<p:panel header="Informações para contato">
-				<p:messages />
-				<p:panelGrid columns="2" styleClass="ui-noborder">
-
-					<p:outputLabel for="telefone" value="Telefone" />
-					<p:inputMask id="telefone" label="Telefone "
-						value="#{usuarioEdit.usuario.contato.telefone}" required="true" mask="(99)99999-9999"/>
-
-				</p:panelGrid>
-			</p:panel>
-		</p:tab>
-
-		<p:tab id="cadastro" title="Cadastro">
+	<p:tab id="cadastro" title="Cadastro">
 			<p:panel header="Informações de cadastro">
 				<p:messages />
 				<p:panelGrid columns="2" styleClass="ui-noborder">
@@ -119,6 +50,88 @@
 						value="#{usuarioEdit.usuario.password}" label="Confirm Password"
 						required="true" rendered="#{!usuarioEdit.edicaoDeUsuario}"
 						feedback="true" />
+						
+				</p:panelGrid>
+			</p:panel>
+		</p:tab>
+		
+		<f:facet name="header">Usuario</f:facet>
+		<p:tab id="pessoal" title="Pessoal">
+			<p:panel header="Detalhes pessoais">
+				<p:messages />
+				<p:panelGrid columns="2" styleClass="ui-noborder">
+
+					<p:outputLabel value="Id:"
+						rendered="#{usuarioEdit.edicaoDeUsuario}" />
+					<p:outputLabel value="#{usuarioEdit.usuario.id}"
+						rendered="#{usuarioEdit.edicaoDeUsuario}" />
+
+					<p:outputLabel for="nome" value="Nome:" />
+					<p:inputText id="nome" value="#{usuarioEdit.usuario.nome}"
+						label="Nome" required="true" />
+
+					<p:outputLabel for="sobreNome" value="SobreNome:" />
+					<p:inputText id="sobreNome"
+						value="#{usuarioEdit.usuario.sobreNome}" label="SobreNome" />
+						
+					<p:outputLabel for="cpf" value="Cpf:" />
+					<p:inputText id="cpf"	value="#{usuarioEdit.usuario.cpf}" label="Cpf" />
+
+					<p:outputLabel for="dataDeAniversario" value="DataDeAniversario:" rendered="#{usuarioEdit.isCliente()}"  />
+					<ui:include src="/WEB-INF/templates/_date.xhtml">
+						<ui:param name="v" value="#{usuarioEdit.isCliente()}"></ui:param>
+						<ui:param name="id" value="dataDeAniversario" />
+						<ui:param name="value"
+							value="#{usuarioEdit.usuario.dataDeAniversario}" />
+						<ui:param name="label" value="DataDeAniversario" />
+						<ui:param name="required" value="#{true}" />
+					</ui:include>
+					
+					<p:outputLabel for="salario" value="Salario:" rendered="#{usuarioEdit.isFuncionario()}"/>
+					<p:inputText id="salario"
+						value="#{usuarioEdit.usuario.salario}" label="Salario" required="true" rendered="#{usuarioEdit.isFuncionario()}"/>
+
+				</p:panelGrid>
+			</p:panel>
+		</p:tab>
+
+		<p:tab id="endereco" title="Endereço">
+			<p:panel header="Detalhes de endereço">
+				<p:messages />
+				<p:panelGrid columns="2" styleClass="ui-noborder">
+
+					<p:outputLabel for="rua" value="Rua:" />
+					<p:inputText id="rua" label="Rua"
+						value="#{usuarioEdit.usuario.endereco.rua}" required="true" />
+
+					<p:outputLabel for="numero" value="Número:" />
+					<p:inputText id="numero" label="Numero"
+						value="#{usuarioEdit.usuario.endereco.numero}" required="true"/>
+
+					<p:outputLabel for="bairro" value="Bairro: " />
+					<p:inputText id="bairro" label="Bairro"
+						value="#{usuarioEdit.usuario.endereco.bairro}" required="true"/>
+
+					<p:outputLabel for="cep" value="CEP:" />
+					<p:inputMask id="cep" label="Cep"
+						value="#{usuarioEdit.usuario.endereco.cep}" mask="99999-999" />
+				</p:panelGrid>
+			</p:panel>
+		</p:tab>
+
+		<p:tab id="contato" title="Contato">
+			<p:panel header="Informações para contato">
+				<p:messages />
+				<p:panelGrid columns="2" styleClass="ui-noborder">
+
+					<p:outputLabel for="telefone" value="Telefone" />
+					<p:inputMask id="telefone" label="Telefone "
+						value="#{usuarioEdit.usuario.contato.telefone}" required="true" mask="(99)99999-9999"/>
+						
+					<p:outputLabel for="email" value="E-mail" />
+					<p:inputText id="email" label="E-mail "
+						value="#{usuarioEdit.usuario.contato.email}" />
+
 				</p:panelGrid>
 			</p:panel>
 		</p:tab>
@@ -168,6 +181,10 @@
 
 						<p:outputLabel for="telefone" value="Telefone:" />
 						<p:outputLabel value="#{usuarioEdit.usuario.contato.telefone}"
+							styleClass="outputlabel"></p:outputLabel>
+							
+						<p:outputLabel for="email" value="E-mail:" />
+						<p:outputLabel value="#{usuarioEdit.usuario.contato.email}"
 							styleClass="outputlabel"></p:outputLabel>
 
 					</p:panelGrid>
