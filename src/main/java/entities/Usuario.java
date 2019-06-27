@@ -286,7 +286,6 @@ public class Usuario implements Identificavel {
 		if (group == null) {
 			return;
 		}
-
 		if (Group.CLIENTE == group) {
 			salario = null;
 		} else if (Group.FUNCIONARIO == group) {

@@ -24,11 +24,6 @@
 
 			<ui:include src="/WEB-INF/templates/_campos_edit_usuario.xhtml" />	
 	
-			<p:panelGrid columns="2" styleClass="ui-noborder">
-				<p:commandButton id="botaoSubmeter" action="#{usuarioEdit.saveUsuario}" value="Submit" update="@form" icon="fa fa-save" />
-				<p:button id="botaoCancelar" outcome="index.xhtml" value="Cancel" icon="fa fa-remove" />
-			</p:panelGrid>
-			
 			<p:defaultCommand id="defaultCommandId" target="formEdit:botaoSubmeter" />
 		</h:form>
 	</ui:define>
