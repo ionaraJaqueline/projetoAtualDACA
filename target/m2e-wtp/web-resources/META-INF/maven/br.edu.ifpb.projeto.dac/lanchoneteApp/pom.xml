@@ -12,6 +12,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<postgresql.driver.version>42.2.5</postgresql.driver.version>
 	</properties>
+
 	<dependencies>
 		<!-- Java EE 8 API -->
 		<dependency>
@@ -28,18 +29,28 @@
 			<version>3.2</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.primefaces/primefaces -->
-		<!-- https://www.primefaces.org/ - PrimeFaces | Ultimate UI Framework for Java EE -->
+		<!-- https://www.primefaces.org/ - PrimeFaces | Ultimate UI Framework for 
+			Java EE -->
 		<dependency>
 			<groupId>org.primefaces</groupId>
 			<artifactId>primefaces</artifactId>
 			<version>7.0</version>
 		</dependency>
-				<!-- JDBC Driver do PostgreSQL -->
+		<!-- JDBC Driver do PostgreSQL -->
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<version>${postgresql.driver.version}</version>
 		</dependency>
-		
+
+		<!-- https://mvnrepository.com/artifact/junit/junit -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+
+
 	</dependencies>
 </project>
